@@ -7,34 +7,50 @@ mongoose.connect('mongodb://localhost:27017/TodoApp', {
 
 var Todo = mongoose.model('Todo', {
     text: {
-        type: String
+        type: String,
+        required: true,
+        minlength: 1,
+        trim: true
     },
     completed: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     completedAt: {
-        type: Number
+        type: Number,
+        default: null
     }
 });
 
 var newTodo = new Todo({
-    text: 'Cook dinner'
+    text: 'Edit this video'
 });
 
 newTodo.save().then((doc) => {
     console.log('Saved todo', doc)
 }, (err) => {
-    console.log('Unable to sabe todo')
+    console.log('Unable to sabe todo', err)
 });
 
-var otherTodo = new Todo({
-    text: 'Feed the cat',
-    completed: false,
-    completedAt: 12345
+var User = mongoose.model('User', {
+    email: {
+        type: String,
+        required: true,
+        minlength: 1,
+        trim: true,
+        index: true
+    }
 });
 
-otherTodo.save().then((doc) => {
-    console.log('Saved todo', doc)
+
+var newUser = new User({
+    email: 'sample@sample.com'
+});
+
+newUser.save().then((doc) => {
+    console.log('Saved user', doc)
 }, (err) => {
-    console.log('Unable to sabe todo')
+    console.log('Unable to sabe user', err)
 });
+
+
